@@ -41,6 +41,10 @@ public class Order {
         return items;
     }
 
+    public long getOrderId() {
+        return orderId;
+    }
+
     public String getAddress() {
         return address;
     }

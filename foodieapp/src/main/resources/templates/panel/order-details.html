@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>FoodieApp</title>
+</head>
+<body>
+
+<div class="container bg-secondary">
+    <div class="row text-white bg-dark text-center p-5">
+        <h1 class="display-4">Order details</h1>
+        <h1 class="display-6" th:text="status + ': ' + ${order.orderStatus.description}"></h1>
+
+        <a href="/panel/order-management">Order List</a>
+    </div>
+    <div class="row">
+        <div class="card col-6 offset-3 gy-1">
+
+            <div>
+                <table class="table text-center" >
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item:${order.items}">
+                        <td th:text="${item.name}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <form method="post" action="/panel/order-management">
+                    <div class="form-row align-items-center text-center">
+                        <div class="col-auto my-1">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">Set Status</label>
+                            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="status">
+                                <option th:value="${T(pl.javastart.foodieapp.entity.OrderStatus).NEW.name()}">New</option>
+                                <option th:value="${T(pl.javastart.foodieapp.entity.OrderStatus).IN_PROGRESS.name()}">In progress</option>
+                                <option th:value="${T(pl.javastart.foodieapp.entity.OrderStatus).COMPLETE.name()}">Completed</option>
+                            </select>
+                        </div>
+                        <div class="col-auto my-1">
+                            <input type="hidden" name="orderId" th:value="${order.orderId}">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>

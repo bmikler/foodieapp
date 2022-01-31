@@ -45,7 +45,7 @@ public class OrderController {
 
     }
 
-    @PostMapping("/create-order")
+    @PostMapping("/order")
     public String createOrder(@RequestParam String address, @RequestParam String phone, Model model){
 
         Order order = clientOrder.getOrder();
