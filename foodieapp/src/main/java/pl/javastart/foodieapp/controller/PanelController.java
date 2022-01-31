@@ -22,7 +22,7 @@ public class PanelController {
     public PanelController(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
-    
+
     @GetMapping("/panel/order-management")
     public String panelPage(@RequestParam(required = false) OrderStatus status, Model model) {
 
@@ -42,21 +42,34 @@ public class PanelController {
     @GetMapping("panel/order-details/{id}")
     public String orderDetail(@PathVariable Long id, Model model){
 
-        orderRepository.findById(id).ifPresent(order -> model.addAttribute("order", order));
+        return orderRepository.findById(id)
+                .map(order -> orderPage(order, model))
+                .orElse("redirect:/panel/order-management");
 
-        return "panel/order-details";
     }
 
     @PostMapping("/panel/order-management")
-    public String changeStatus(@RequestParam OrderStatus status, @RequestParam Long orderId){
+    public String changeStatus(@RequestParam OrderStatus status, @RequestParam Long orderId, Model model){
 
 
-        orderRepository.findById(orderId).ifPresent(order -> {
-            order.setOrderStatus(status);
-            orderRepository.save(order);
+        Optional<Order> order = orderRepository.findById(orderId);
+
+        order.ifPresent(o -> {
+            o.setOrderStatus(status);
+            orderRepository.save(o);
         });
 
-        return "redirect:order-details/" + orderId;
+        return order
+                .map(o -> orderPage(o, model))
+                .orElse("redirect:/panel/order-management");
+
+    }
+
+    private String orderPage(Order order, Model model) {
+
+        model.addAttribute("order", order);
+
+        return "panel/order-details";
 
     }
 

@@ -2,10 +2,12 @@ package pl.javastart.foodieapp.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pl.javastart.foodieapp.entity.Item;
 import pl.javastart.foodieapp.entity.Order;
 import pl.javastart.foodieapp.entity.OrderStatus;
 import pl.javastart.foodieapp.repository.ItemRepository;
@@ -40,10 +42,10 @@ public class OrderController {
     public String addItemToOrder(@RequestParam long itemId) {
 
         itemRepository.findByItemId(itemId).ifPresent(item -> clientOrder.addItemToOrder(item));
-
         return "redirect:/";
 
     }
+
 
     @PostMapping("/order")
     public String createOrder(@RequestParam String address, @RequestParam String phone, Model model){
