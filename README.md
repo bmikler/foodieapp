@@ -13,5 +13,7 @@ Application created as part of JavaStart - Spring course.
 
 * Ordering:
 
+(https://user-images.githubusercontent.com/84096865/153166715-9eb62ec1-d589-49fd-be19-b4898a9f882a.gif)
+
 * Main page/detailed page:
 
